@@ -1,12 +1,19 @@
 from setuptools import setup, find_packages
+import os
 
+def read(*paths):
+    with open(os.path.join(*paths), 'r') as f:
+        return f.read()
 
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
+requirements = [
+    "jellyfish",
+    "regex",
     
+]
+
 setup(
     name="autocorrect_kh",
-    version="0.2.1",
+    version="0.2.2",
     packages=find_packages(),
     include_package_data=True,
     package_data={
@@ -22,6 +29,8 @@ setup(
     ],
     author="Kim Ouddommony",
     author_email="kimmony039@gmail.com",
-    description="An autocorrect address library specifically for Khmer National ID Card",
+    description="An autocorrect address specifically for Khmer National ID Card",
+    long_description=(read('README.md')),
+    long_description_content_type='text/markdown',
     url="https://github.com/monykappa/autocorrect-kh.git",
 )
