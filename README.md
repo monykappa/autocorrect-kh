@@ -9,8 +9,8 @@ This Python script (`autocorrect.py`) provides an autocorrection tool for Khmer 
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
-- [How It Works](#how_it_works)
-- [Key Functions](#key_functions)
+- [How It Works](#how-it-works)
+- [Key Functions](#key-functions)
 
 ## Features
 - Khmer Address Correction: Fixes typos and misspellings in Khmer addresses.
@@ -68,26 +68,26 @@ Khmer National ID addresses are split into:
 
 ## Correction Flow
 ### Address 1: House, Road, Village
-    - ផ្ទះ (House) and ផ្លូវ (Road):
-        - Corrected using hardcoded rules (not from dictionaries) due to their unique patterns, often followed by numbers or identifiers.
-        - Examples:
-            - `ផ្ទ១១៣` → `ផ្ទះ១១៣` 
-            - `ផ្លូរបេតុង` → `ផ្លូវបេតុង` 
-    - ភូមិ (Village/Phum):
-        - First checks and corrects the prefix ភូមិ (e.g., `ភុមិ` → `ភូមិ`).
-        - Then corrects the village name after ភូមិ using the phum_dict (loaded from data/phum/).
-        - Note: The phum dictionary excludes the word ភូមិ because it’s inconsistently present on ID cards.
-        - Example:
-            - Input: `ភុមិស្វយព្រៃ`
-            - Step 1: `ភុមិ` → `ភូមិ`
-            - Step 2: `ស្វយព្រៃ` → `ស្វាយព្រៃ` (using phum_dict)
-            - Output: `ភូមិស្វាយព្រៃ`
-### Address 2: Commune, District, Province
-    - Corrected directly using dictionaries (khum_dict, district_dict, province_dict) loaded from data/khum/, data/district.txt, and data/province.txt.
-    - No prefix-specific rules; full names are matched and corrected.
+- ផ្ទះ (House) and ផ្លូវ (Road):
+    - Corrected using hardcoded rules (not from dictionaries) due to their unique patterns, often followed by numbers or identifiers.
+    - Examples:
+        - `ផ្ទ១១៣` → `ផ្ទះ១១៣` 
+        - `ផ្លូរបេតុង` → `ផ្លូវបេតុង` 
+- ភូមិ (Village/Phum):
+    - First checks and corrects the prefix ភូមិ (e.g., `ភុមិ` → `ភូមិ`).
+    - Then corrects the village name after ភូមិ using the phum_dict (loaded from data/phum/).
+    - Note: The phum dictionary excludes the word ភូមិ because it’s inconsistently present on ID cards.
     - Example:
-        - Input: `ឃុំស្វាយ ស្រុកកំពង់ ខេត្តកំពត`
-        - Output: `ឃុំស្វាយ ស្រុកកំពង់ចាឮ ខេត្តកំពត` (corrected using dictionaries)
+        - Input: `ភុមិស្វយព្រៃ`
+        - Step 1: `ភុមិ` → `ភូមិ`
+        - Step 2: `ស្វយព្រៃ` → `ស្វាយព្រៃ` (using phum_dict)
+        - Output: `ភូមិស្វាយព្រៃ`
+### Address 2: Commune, District, Province
+- Corrected directly using dictionaries (khum_dict, district_dict, province_dict) loaded from data/khum/, data/district.txt, and data/province.txt.
+- No prefix-specific rules; full names are matched and corrected.
+- Example:
+    - Input: `ឃុំស្វាយ ស្រុកកំពង់ ខេត្តកំពត`
+    - Output: `ឃុំស្វាយ ស្រុកកំពង់ចាឮ ខេត្តកំពត` (corrected using dictionaries)
 
 # Key Functions
 - `normalize_text(text)`: Normalizes Khmer Unicode to NFC for consistent processing.
