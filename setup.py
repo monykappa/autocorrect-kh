@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="autocorrect_kh",
-    version="0.1.1",
+    version="0.1.11",
     packages=find_packages(),
     include_package_data=True,
     package_data={
