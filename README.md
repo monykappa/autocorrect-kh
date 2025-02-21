@@ -86,8 +86,8 @@ Khmer National ID addresses are split into:
 - Corrected directly using dictionaries (khum_dict, district_dict, province_dict) loaded from data/khum/, data/district.txt, and data/province.txt.
 - No prefix-specific rules; full names are matched and corrected.
 - Example:
-    - Input: `ឃុំស្វាយ ស្រុកកំពង់ ខេត្តកំពត`
-    - Output: `ឃុំស្វាយ ស្រុកកំពង់ចាឮ ខេត្តកំពត` (corrected using dictionaries)
+    - Input: `សង្កាត់បឹងត្រុបែក ខណ្ឌចំករមន ភ្នំពញ`
+    - Output: `សង្កាត់បឹងត្របែក ខណ្ឌចំការមន ភ្នំពេញ` (corrected using dictionaries)
 
 # Key Functions
 - `normalize_text(text)`: Normalizes Khmer Unicode to NFC for consistent processing.

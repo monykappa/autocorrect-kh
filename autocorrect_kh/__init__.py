@@ -7,5 +7,3 @@ from .autocorrect import (
     district_dict,
     province_dict
 )
-
-from .settings import PHUM_DICT_FOLDER, KHUM_DICT_FOLDER, DISTRICT_DICT_PATH, PROVINCE_DICT_PATH
