@@ -40,19 +40,16 @@ def load_autocorrect_dicts_from_resource(folder_resource: str) -> set:
     return words
 
 # Automatically load dictionaries when the package is imported.
-# Adjust the resource paths according to your package structure.
 phum_dict = load_autocorrect_dicts_from_resource("data/phum")
 khum_dict = load_autocorrect_dicts_from_resource("data/khum")
 district_dict = load_autocorrect_dict_from_resource("data/district.txt")
 province_dict = load_autocorrect_dict_from_resource("data/province.txt")
-
 
 # print(f"Phum Dict Loaded ({len(phum_dict)} words)")
 # print(f"Khum Dict Loaded ({len(khum_dict)} words)")
 # print(f"District Dict Loaded ({len(district_dict)} words)")
 # print(f"Province Dict Loaded ({len(province_dict)} words)")
 
-# The rest of your autocorrect functions remain unchanged:
 def autocorrect_word(
     word: str, word_set: set, max_ratio: float = 0.4, max_typo_distance: int = None
 ) -> list:
@@ -97,7 +94,6 @@ def merge_tokens(part: str) -> str:
             merged.append(tokens[i])
             i += 1
     return " ".join(merged)
-
 
 def autocorrect_word_in_part(word, dictionary):
     word = normalize_text(word)
@@ -151,14 +147,13 @@ def autocorrect_word_in_part(word, dictionary):
 
     return word if word in dictionary else (autocorrect_word(word, dictionary)[0] or word)
 
-
-
-def autocorrect_address_1(part, dictionary):
+def autocorrect_address_1(part, dictionary=phum_dict):
     # Merge tokens and autocorrect each word.
     return " ".join(
         autocorrect_word_in_part(w, dictionary) for w in merge_tokens(part).split()
     )
-def autocorrect_address_2(address_2_text, khum_dict, district_dict, province_dict):
+
+def autocorrect_address_2(address_2_text, khum_dictionary=khum_dict, district_dictionary=district_dict, province_dictionary=province_dict):
     parts = address_2_text.split()
     if len(parts) >= 2 and is_number(parts[1]):
         commune = parts[0] + parts[1]
@@ -174,7 +169,7 @@ def autocorrect_address_2(address_2_text, khum_dict, district_dict, province_dic
         else:
             commune = parts[0] if parts else ""
             district = province = ""
-    corrected_commune = autocorrect_word(commune, khum_dict, max_ratio=0.6)[0]
-    corrected_district = autocorrect_word(district, district_dict, max_ratio=0.6)[0] if district else ""
-    corrected_province = autocorrect_word(province, province_dict, max_ratio=0.6)[0] if province else ""
+    corrected_commune = autocorrect_word(commune, khum_dictionary, max_ratio=0.6)[0]
+    corrected_district = autocorrect_word(district, district_dictionary, max_ratio=0.6)[0] if district else ""
+    corrected_province = autocorrect_word(province, province_dictionary, max_ratio=0.6)[0] if province else ""
     return " ".join(filter(None, [corrected_commune, corrected_district, corrected_province]))

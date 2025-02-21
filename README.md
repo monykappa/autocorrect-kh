@@ -45,18 +45,16 @@ git clone https://github.com/monykappa/autocorrect-kh.git
 ## Usage
 
 ```bash
-from autocorrect import autocorrect_address_1, autocorrect_address_2, phum_dict, khum_dict, district_dict, province_dict
+from autocorrect_kh import autocorrect_address_1, autocorrect_address_2
 
-# Example of misspelled address
-address_1 = "ផ្ទ៤១បេ ផ្លុវ៤៤៤ ភុមិ២"
-address_2 = "សង្កាត់ទលទពូងទី ២ ខណ្ឌចំករមន ភ្នំពញ"
+address_1_text = "ផ្ទ៤១បេ ផ្លុវ៤៤៤ ភុមិ២"
+address_2_text = "សង្កាត់ទលទពូងទី ២ ខណ្ឌចំករមន ភ្នំពញ"
 
-# Correct the address
-corrected_address_1 = autocorrect_address_1(address_1, phum_dict)
-corrected_address_2 = autocorrect_address_2(address_2, khum_dict, district_dict, province_dict)
 
-print(corrected_address_1)  # Output: ផ្ទះ៤១បេ ផ្លូវ៤៤៤ ភូមិ២
-print(corrected_address_2)  # Output: សង្កាត់ទួលទំពូងទី២ ខណ្ឌចំការមន ភ្នំពេញ
+address_1_text = autocorrect_address_1(address_1_text)
+address_2_text = autocorrect_address_2(address_2_text)
+
+print("Autocorrected Address:", address_1_text + " " + address_2_text)
 ```
 
 # How It Works
@@ -83,7 +81,10 @@ Khmer National ID addresses are split into:
         - Step 2: `ស្វយព្រៃ` → `ស្វាយព្រៃ` (using phum_dict)
         - Output: `ភូមិស្វាយព្រៃ`
 ### Address 2: Commune, District, Province
-- Corrected directly using dictionaries (khum_dict, district_dict, province_dict) loaded from data/khum/, data/district.txt, and data/province.txt.
+- Corrected directly using automatically loaded dictionaries from:
+    - `data/khum/` for khum
+    - `data/district.txt` for district
+    - `data/province.txt` for province
 - No prefix-specific rules; full names are matched and corrected.
 - Example:
     - Input: `សង្កាត់បឹងត្រុបែក ខណ្ឌចំករមន ភ្នំពញ`
@@ -95,5 +96,5 @@ Khmer National ID addresses are split into:
 - `load_autocorrect_dict_from_resource(resource_path)`: Loads a dictionary from a single text file (e.g., `district.txt`).
 - `load_autocorrect_dicts_from_resource(folder_resource)`: Loads dictionaries from all `.txt` files in a folder (e.g., `data/phum/`).
 - `autocorrect_word(word, word_set)`: Corrects a word using Damerau-Levenshtein distance.
-- `autocorrect_address_1(part, dictionary)`: Corrects `address_1` with custom rules.
-- `autocorrect_address_2(address_2_text, khum_dict, district_dict, province_dict)`: Corrects `address_2 `components.
+- `autocorrect_address_1(part, dictionary=phum_dict)`: Corrects address_1 with custom rules.
+- `autocorrect_address_2(address_2_text, khum_dictionary=khum_dict, district_dictionary=district_dict, province_dictionary=province_dict)`: Corrects address_2 components using automatically loaded dictionaries.
