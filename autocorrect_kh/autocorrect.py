@@ -173,3 +173,41 @@ def autocorrect_address_2(address_2_text, khum_dictionary=khum_dict, district_di
     corrected_district = autocorrect_word(district, district_dictionary, max_ratio=0.6)[0] if district else ""
     corrected_province = autocorrect_word(province, province_dictionary, max_ratio=0.6)[0] if province else ""
     return " ".join(filter(None, [corrected_commune, corrected_district, corrected_province]))
+
+
+# ==========================Autocorrect Province, District, Khum, Phum separately==========================
+
+def autocorrect_province(province_text: str) -> str:
+    return autocorrect_word(province_text, province_dict, max_ratio=0.6)[0]
+
+def autocorrect_district(district_text: str) -> str:
+    return autocorrect_word(district_text, district_dict, max_ratio=0.6)[0]
+
+def autocorrect_khum(khum_text: str) -> str:
+    return autocorrect_word(khum_text, khum_dict, max_ratio=0.6)[0]
+
+def autocorrect_phum(phum_text: str) -> str:
+    phum_text = normalize_text(phum_text)  # Normalize Unicode characters
+    
+    # Case 1: If it already starts with "ភូមិ", autocorrect the remaining part
+    if phum_text.startswith("ភូមិ"):
+        rem = phum_text[len("ភូមិ"):]  # Get the part after "ភូមི"
+        if not rem.strip():
+            return "ភូមិ"  # Return just "ភូមិ" if nothing follows
+        else:
+            corrected_rem = autocorrect_word(rem, phum_dict, max_ratio=0.6)[0]
+            return "ភូមិ" + corrected_rem
+    
+    # Case 2: Check if it starts with a variant of "ភូមិ" (e.g., "ភុមិ")
+    clusters = regex.findall(r"\X", phum_text)  # Split into Unicode grapheme clusters
+    t_clusters = regex.findall(r"\X", "ភូមិ")  # Clusters for "ភូមិ"
+    if len(clusters) >= len(t_clusters):
+        prefix = "".join(clusters[:len(t_clusters)])  # Take the first part of the input
+        d = jellyfish.damerau_levenshtein_distance(prefix, "ភូមិ")  # Compare with "ភូមិ"
+        if d <= 2:  # Allow small typos (distance ≤ 2)
+            rem = "".join(clusters[len(t_clusters):])  # Get the remaining part
+            corrected_rem = autocorrect_word(rem, phum_dict, max_ratio=0.6)[0] if rem.strip() else ""
+            return "ភូមិ" + corrected_rem
+    
+    # Case 3: Fallback to dictionary-based correction
+    return autocorrect_word(phum_text, phum_dict, max_ratio=0.6)[0]

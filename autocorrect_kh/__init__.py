@@ -2,8 +2,8 @@
 from .autocorrect import (
     autocorrect_address_1,
     autocorrect_address_2,
-    phum_dict,
-    khum_dict,
-    district_dict,
-    province_dict
+    autocorrect_province,
+    autocorrect_district,
+    autocorrect_khum,
+    autocorrect_phum,
 )
