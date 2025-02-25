@@ -23,7 +23,7 @@ print(f"Original province {province_text} -> autocorrected province {autocorrect
 
 # ===========Autocorrect for Address for Khmer National ID================
 
-address_1 = "ផ្ទ៤១បេ ផ្លុវ៤៤៤ ភុមិ២"
+address_1 = "ផ្ទះ៤១បេ ផ្លូវ៤៤៤ ភុមិ២"
 address_2 = "សង្កាត់ទលទពូងទី ២ ខណ្ឌចំករមន ភ្នំពញ"
 
 
